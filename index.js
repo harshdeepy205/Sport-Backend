@@ -25,6 +25,8 @@ mongoose.connection.on('error',(err)=>{
 
 
 app.use(express.json())
+require('./modal/user')
+require('./modal/club')
 
 app.use("/payment", require("./routes/payment"));
 app.use("/auth", require("./routes/auth"));
