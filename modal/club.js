@@ -14,7 +14,7 @@ const clubDetails=mongoose.Schema({
         required:true
     },
     sports:{
-        type:String,
+        type:Array,
         required:true
     }
 })
