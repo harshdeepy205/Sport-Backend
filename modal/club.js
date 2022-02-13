@@ -9,7 +9,11 @@ const clubDetails=mongoose.Schema({
         type:String,
         required:true
     },
-    rating:{
+    address:{
+        type:String,
+        required:true
+    },
+    sports:{
         type:String,
         required:true
     }
