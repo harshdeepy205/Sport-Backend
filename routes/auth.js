@@ -44,9 +44,9 @@ router.post('/userentry',(req,res)=>{
 
 
 router.post('/clubdetails',(req,res)=>{
-    const {name,image,address, sports}=req.body;
+    const {name,image,address, sports,clubImages}=req.body;
 
-    if (!name || !image || !address || !sports) {
+    if (!name || !image || !address || !sports || !clubImages) {
         return res.status(422).json({ error: "Please Fill the details" })
     }
 
@@ -59,7 +59,8 @@ router.post('/clubdetails',(req,res)=>{
                 name,
                 image,
                 address,
-                sports
+                sports,
+                clubImages
             });
 
             clubetails.save()
