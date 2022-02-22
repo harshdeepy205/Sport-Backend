@@ -44,9 +44,9 @@ router.post('/userentry',(req,res)=>{
 
 
 router.post('/clubdetails',(req,res)=>{
-    const {name,image,address, sports,clubImages}=req.body;
+    const {name,image,address, sports}=req.body;
 
-    if (!name || !image || !address || !sports || !clubImages) {
+    if (!name || !image || !address || !sports) {
         return res.status(422).json({ error: "Please Fill the details" })
     }
 
@@ -59,8 +59,7 @@ router.post('/clubdetails',(req,res)=>{
                 name,
                 image,
                 address,
-                sports,
-                clubImages
+                sports
             });
 
             clubetails.save()
@@ -75,12 +74,34 @@ router.post('/clubdetails',(req,res)=>{
    
 })
 
+
+router.post('/checkuser',(req,res)=>{
+    const {mobile}=req.body;
+
+    if (!mobile) {
+        return res.status(422).json({ error: "Please Fill the details" })
+    }
+
+    UserDetails.findOne({mobile:mobile})
+        .then((saveduser)=>{
+            if(saveduser){
+                return res.status(200).json({message:true})
+            }
+            else{
+                return res.status(422).json({message:false})
+            }
+        })
+})
+
+
 router.post('/sendmessage',async (req,res)=>{
     console.log(req.body)
     const {message,number } = req.body
     if (!message || !number) {
         return res.status(422).json({ error: "Please Fill the details" })
     }
+    // const response= ({message:message,number:number})
+    // res.send(response)
     const response=await fast2sms.sendMessage({authorization:process.env.API_KEY,message:req.body.message,numbers:[req.body.number]})
     res.send(response)
 })

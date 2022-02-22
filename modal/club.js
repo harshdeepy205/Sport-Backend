@@ -16,10 +16,6 @@ const clubDetails=mongoose.Schema({
     sports:{
         type:Array,
         required:true
-    },
-    clubImages:{
-        type:Array,
-        required:true
     }
 })
 
