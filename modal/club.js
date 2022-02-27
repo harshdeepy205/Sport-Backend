@@ -16,7 +16,11 @@ const clubDetails=mongoose.Schema({
     sports:{
         type:Array,
         required:true
-    }
+    },
+    banners:{
+        type:Array,
+        required:true
+    },
 })
 
 mongoose.model('ClubDetails',clubDetails);

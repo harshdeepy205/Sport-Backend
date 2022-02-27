@@ -2,13 +2,15 @@ const express=require('express')
 const cors=require('cors')
 const mongoose=require('mongoose');
 const {MONGOURI}=require('./key');
-
+const myParser = require("body-parser");
 
 const app=express()
 require("dotenv").config();
 
 app.use(express.json({ extended: false }));
 app.use(cors())
+// app.use(express.bodyParser({limit: '10mb'}));
+app.use(myParser.text({ limit: '200mb' }));
 
 mongoose.connect(MONGOURI,{
     useNewUrlParser:true,
