@@ -3,6 +3,21 @@ const express = require("express");
 const Razorpay = require("razorpay");
 const crypto = require('crypto');
 const router = express.Router();
+const mongoose = require('mongoose');
+
+
+const PaymentDetailsSchema = mongoose.Schema({
+    razorpayDetails: {
+      orderId: String,
+      paymentId: String,
+      signature: String,
+    },
+    success: Boolean,
+  });
+  
+  const PaymentDetails = mongoose.model('PatmentDetail', PaymentDetailsSchema);
+
+
 
 router.post("/orders", async (req, res) => {
     console.log("test")
@@ -54,7 +69,18 @@ router.post("/success", async (req, res) => {
 
         if (digest !== razorpaySignature)
             return res.status(400).json({ msg: "Transaction not legit!" });
-
+        
+        const newPayment = PaymentDetails({
+            razorpayDetails: {
+            orderId: razorpayOrderId,
+            paymentId: razorpayPaymentId,
+            signature: razorpaySignature,
+            },
+            success: true,
+        });
+          
+        await newPayment.save();
+          
     
         res.json({
             msg: "success",

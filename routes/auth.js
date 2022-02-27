@@ -5,6 +5,7 @@ const mongoose=require('mongoose')
 const cors=require('cors')
 const UserDetails=mongoose.model('UserDetails')
 const ClubDetails=mongoose.model('ClubDetails')
+const NewUserDetails=mongoose.model('NewUserDetails')
 
 require("dotenv").config();
 
@@ -13,9 +14,9 @@ router.use(express.json({ extended: false }));
 
 
 router.post('/userentry',(req,res)=>{
-    const {name,email,mobile}=req.body;
+    const {fname,lname,email,mobile}=req.body;
 
-    if (!name || !email || !mobile) {
+    if (!fname || !lname || !email || !mobile) {
         return res.status(422).json({ error: "Please Fill the details" })
     }
 
@@ -25,7 +26,8 @@ router.post('/userentry',(req,res)=>{
                 return res.status(422).json({error:"User already exists"})
             }
             const details=new UserDetails({
-                name,
+                fname,
+                lname,
                 email,
                 mobile
             });
@@ -41,6 +43,39 @@ router.post('/userentry',(req,res)=>{
    
    
 })
+
+
+router.get('/userall',(req,res)=>{
+
+    UserDetails.find({ },(err,data)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.json(data);
+        }
+    })
+        
+})
+
+
+router.get('/userinfo/:mobile', (req, res) => {
+    console.log(req.params.mobile);
+    UserDetails.find({ mobile: req.params.mobile }, (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log("data", data)
+    })
+        .then((result) => {
+            res.json(result)
+            console.log(result)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+})
+
 
 
 router.post('/clubdetails',(req,res)=>{
@@ -127,6 +162,47 @@ router.get('/getuserinfo', (req, res) => {
     })
 })
 
+
+
+// router.post('/userentry2',(req,res)=>{
+//     const {fname,lname,email,mobile,otp,time}=req.body;
+
+//     NewUserDetails.findOne({mobile:mobile})
+//         .then((saveduser)=>{
+//             if(saveduser){
+//                 NewUserDetails.updateOne({mobile:mobile},
+//                     {
+//                     fname:fname,
+//                     lname:lname,
+//                     email:email,
+//                     otp:otp,
+//                     time:time
+//                 })
+//                 .then(() => {
+//                     res.json({ message: "Restaurant updated successfully" })
+//                 }).catch(err => {
+//                     console.log(err);
+//                 })
+//             }
+//             const details=new NewUserDetails({
+//                 fname,
+//                 lname,
+//                 email,
+//                 mobile,
+//                 otp,
+//                 time:Date.now()
+//             });
+
+//             details.save()
+//             .then(user=>{
+//                 res.status(200).json({message:"saved successfully"})
+//             })
+//             .catch(err=>{
+//                 console.log(err)
+//                 res.status(400).json({error:err})
+//             })
+//         })
+// })
 
 
 
