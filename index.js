@@ -29,9 +29,11 @@ mongoose.connection.on('error',(err)=>{
 app.use(express.json())
 require('./modal/user')
 require('./modal/club')
+require('./modal/slot')
 
 app.use("/payment", require("./routes/payment"));
 app.use("/auth", require("./routes/auth"));
+
 
 app.listen(5000,()=>{
     console.log("Server is started")
