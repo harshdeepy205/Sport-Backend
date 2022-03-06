@@ -130,14 +130,22 @@ router.post("/slots", (req, res) => {
     });
 });
 
-router.get("/getavailableslots", (req, res) => {
-  Slot.find({}, (err, data) => {
-    if (err) {
-      console.log(err, "err");
-      return res.status(422).json({ error: error });
+router.get("/getavailableslots/:id/:date", (req, res) => {
+  var id = req.params.id;
+  var date = req.params.date;
+  Slot.find(
+    {
+      user_id_admin: id,
+      slot_date: date,
+    },
+    (err, data) => {
+      if (err) {
+        console.log(err, "err");
+        return res.status(422).json({ error: error });
+      }
+      res.status(200).json(data);
     }
-    res.status(200).json(data);
-  });
+  );
 });
 
 router.post("/checkuser", (req, res) => {
