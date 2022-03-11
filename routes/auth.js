@@ -6,6 +6,7 @@ const cors = require("cors");
 const UserDetails = mongoose.model("UserDetails");
 const ClubDetails = mongoose.model("ClubDetails");
 const NewUserDetails = mongoose.model("NewUserDetails");
+const UserBooking = mongoose.model("UserBooking");
 const Slot = mongoose.model("Slot");
 require("dotenv").config();
 
@@ -95,6 +96,46 @@ router.post("/clubdetails", (req, res) => {
         res.status(400).json({ error: err });
       });
   });
+});
+
+router.post("/userBooking", (req, res) => {
+  const { fname, lname, email, userId, date, price, time, clubId, clubName } =
+    req.body;
+  const userBooking = new UserBooking({
+    fname,
+    lname,
+    email,
+    userId,
+    date,
+    price,
+    time,
+    clubId,
+    clubName,
+  });
+  userBooking
+    .save()
+    .then((user) => {
+      res.status(200).json({ message: "saved successfully" });
+    })
+    .catch((err) => {
+      res.status(400).json({ error: err });
+    });
+});
+
+router.get("/getUserBooking/:id", (req, res) => {
+  var id = req.params.id;
+  UserBooking.find(
+    {
+      userId: id,
+    },
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(data);
+      }
+    }
+  );
 });
 
 router.post("/slots", (req, res) => {
