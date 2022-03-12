@@ -52,6 +52,16 @@ router.get("/userall", (req, res) => {
   });
 });
 
+router.get("/turfadminlogin/:mobileNo", (req, res) => {
+  ClubDetails.findOne({ mobileNo: req.params.mobileNo })
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
 router.get("/userinfo/:mobile", (req, res) => {
   console.log(req.params.mobile);
   UserDetails.find({ mobile: req.params.mobile }, (err, data) => {
@@ -70,9 +80,9 @@ router.get("/userinfo/:mobile", (req, res) => {
 });
 
 router.post("/clubdetails", (req, res) => {
-  const { name, image, address, sports, banners } = req.body;
+  const { name, image, address, banners, mobileNo } = req.body;
 
-  if (!name || !image || !address || !sports || !banners) {
+  if (!name || !image || !address || !mobileNo || !banners) {
     return res.status(422).json({ error: "Please Fill the details" });
   }
 
@@ -84,7 +94,7 @@ router.post("/clubdetails", (req, res) => {
       name,
       image,
       address,
-      sports,
+      mobileNo,
       banners,
     });
 
@@ -145,7 +155,7 @@ router.post("/userBooking", (req, res) => {
     isPaymentDone,
     paymentMode,
     clubImage,
-    sportName
+    sportName,
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -160,7 +170,7 @@ router.post("/userBooking", (req, res) => {
     isPaymentDone,
     paymentMode,
     clubImage,
-    sportName
+    sportName,
   });
   userBooking
     .save()
