@@ -5,6 +5,10 @@ const slot=mongoose.Schema({
         type:String,
         required:true
     },
+    sport_name:{
+        type:String,
+        required:true
+    },
     slot_date:{
         type:String,
         required:true

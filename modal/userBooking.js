@@ -34,6 +34,19 @@ const userBooking = mongoose.Schema({
     type: String,
     required: true,
   },
+  isPaymentDone: {
+    type: Boolean,
+    required: true,
+  },
+  paymentMode: {
+    type: String,
+    required: true,
+  },
+  clubImage: {
+    type: String,
+    required: true,
+  },
+
 });
 
 mongoose.model("UserBooking", userBooking);

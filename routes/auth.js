@@ -99,7 +99,7 @@ router.post("/clubdetails", (req, res) => {
 });
 
 router.post("/userBooking", (req, res) => {
-  const { fname, lname, email, userId, date, price, time, clubId, clubName } =
+  const { fname, lname, email, userId, date, price, time, clubId, clubName ,isPaymentDone,paymentMode,clubImage} =
     req.body;
   const userBooking = new UserBooking({
     fname,
@@ -111,6 +111,9 @@ router.post("/userBooking", (req, res) => {
     time,
     clubId,
     clubName,
+    isPaymentDone,
+    paymentMode,
+    clubImage
   });
   userBooking
     .save()
@@ -148,6 +151,7 @@ router.post("/slots", (req, res) => {
     slot_end_time,
     slot_status,
     slot_booked_by,
+    sport_name
   } = req.body;
 
   const slot = new Slot({
@@ -159,6 +163,7 @@ router.post("/slots", (req, res) => {
     slot_end_time,
     slot_status,
     slot_booked_by,
+    sport_name
   });
 
   slot
@@ -211,14 +216,14 @@ router.post("/sendmessage", async (req, res) => {
   if (!message || !number) {
     return res.status(422).json({ error: "Please Fill the details" });
   }
-  // const response= ({message:message,number:number})
-  // res.send(response)
-  const response = await fast2sms.sendMessage({
-    authorization: process.env.API_KEY,
-    message: req.body.message,
-    numbers: [req.body.number],
-  });
-  res.send(response);
+  const response= ({message:message,number:number})
+  res.send(response)
+  // const response = await fast2sms.sendMessage({
+  //   authorization: process.env.API_KEY,
+  //   message: req.body.message,
+  //   numbers: [req.body.number],
+  // });
+  // res.send(response);
 });
 
 router.get("/getclubsinfo", (req, res) => {
