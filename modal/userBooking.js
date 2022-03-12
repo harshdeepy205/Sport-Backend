@@ -46,6 +46,10 @@ const userBooking = mongoose.Schema({
     type: String,
     required: true,
   },
+  sportName: {
+    type: String,
+    required: true,
+  },
 
 });
 

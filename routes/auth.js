@@ -145,6 +145,7 @@ router.post("/userBooking", (req, res) => {
     isPaymentDone,
     paymentMode,
     clubImage,
+    sportName
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -159,6 +160,7 @@ router.post("/userBooking", (req, res) => {
     isPaymentDone,
     paymentMode,
     clubImage,
+    sportName
   });
   userBooking
     .save()
