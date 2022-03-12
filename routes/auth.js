@@ -8,6 +8,7 @@ const ClubDetails = mongoose.model("ClubDetails");
 const NewUserDetails = mongoose.model("NewUserDetails");
 const UserBooking = mongoose.model("UserBooking");
 const Slot = mongoose.model("Slot");
+const SportDetails = mongoose.model("SportDetails");
 require("dotenv").config();
 
 router.use(express.json({ extended: false }));
@@ -98,9 +99,53 @@ router.post("/clubdetails", (req, res) => {
   });
 });
 
+router.post("/sportDetails", (req, res) => {
+  const { turfId, sportName } = req.body;
+  const sportDetails = new SportDetails({
+    turfId,
+    sportName,
+  });
+  sportDetails
+    .save()
+    .then((user) => {
+      res.status(200).json({ message: "saved successfully" });
+    })
+    .catch((err) => {
+      res.status(400).json({ error: err });
+    });
+});
+
+router.get("/getSportDetails/:id", (req, res) => {
+  var id = req.params.id;
+  SportDetails.find(
+    {
+      turfId: id,
+    },
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(data);
+      }
+    }
+  );
+});
+
 router.post("/userBooking", (req, res) => {
-  const { fname, lname, email, userId, date, price, time, clubId, clubName ,isPaymentDone,paymentMode,clubImage} =
-    req.body;
+  const {
+    fname,
+    lname,
+    email,
+    userId,
+    date,
+    price,
+    time,
+    clubId,
+    clubName,
+    isPaymentDone,
+    paymentMode,
+    clubImage,
+  } = req.body;
   const userBooking = new UserBooking({
     fname,
     lname,
@@ -113,7 +158,7 @@ router.post("/userBooking", (req, res) => {
     clubName,
     isPaymentDone,
     paymentMode,
-    clubImage
+    clubImage,
   });
   userBooking
     .save()
@@ -151,7 +196,7 @@ router.post("/slots", (req, res) => {
     slot_end_time,
     slot_status,
     slot_booked_by,
-    sport_name
+    sport_name,
   } = req.body;
 
   const slot = new Slot({
@@ -163,7 +208,7 @@ router.post("/slots", (req, res) => {
     slot_end_time,
     slot_status,
     slot_booked_by,
-    sport_name
+    sport_name,
   });
 
   slot
@@ -216,8 +261,8 @@ router.post("/sendmessage", async (req, res) => {
   if (!message || !number) {
     return res.status(422).json({ error: "Please Fill the details" });
   }
-  const response= ({message:message,number:number})
-  res.send(response)
+  const response = { message: message, number: number };
+  res.send(response);
   // const response = await fast2sms.sendMessage({
   //   authorization: process.env.API_KEY,
   //   message: req.body.message,

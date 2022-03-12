@@ -30,6 +30,7 @@ require("./modal/user");
 require("./modal/club");
 require("./modal/slot");
 require("./modal/userBooking");
+require("./modal/sportDetails");
 
 app.use("/payment", require("./routes/payment"));
 app.use("/auth", require("./routes/auth"));
