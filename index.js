@@ -32,8 +32,10 @@ require("./modal/slot");
 require("./modal/userBooking");
 require("./modal/sportDetails");
 
+
 app.use("/payment", require("./routes/payment"));
 app.use("/auth", require("./routes/auth"));
+// app.use("/", require("./routes/mailjet"));
 
 app.listen(5000, () => {
   console.log("Server is started");
