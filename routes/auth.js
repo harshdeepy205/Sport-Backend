@@ -101,7 +101,7 @@ router.post("/clubdetails", (req, res) => {
     clubetails
       .save()
       .then((user) => {
-        res.status(200).json({ message: "saved successfully" });
+        res.status(200).json({ message: "saved successfully", details: user });
       })
       .catch((err) => {
         res.status(400).json({ error: err });
