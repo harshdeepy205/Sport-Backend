@@ -9,6 +9,10 @@ const sportDetails = mongoose.Schema({
     type: String,
     required: true,
   },
+  sportPrice: {
+    type: String,
+    required: true,
+  },
 });
 
 mongoose.model("SportDetails", sportDetails);

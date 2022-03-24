@@ -64,12 +64,7 @@ router.get("/turfadminlogin/:mobileNo", (req, res) => {
 
 router.get("/userinfo/:mobile", (req, res) => {
   console.log(req.params.mobile);
-  UserDetails.find({ mobile: req.params.mobile }, (err, data) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log("data", data);
-  })
+  UserDetails.find({ mobile: req.params.mobile })
     .then((result) => {
       res.json(result);
       console.log(result);
@@ -110,10 +105,11 @@ router.post("/clubdetails", (req, res) => {
 });
 
 router.post("/sportDetails", (req, res) => {
-  const { turfId, sportName } = req.body;
+  const { turfId, sportName,sportPrice } = req.body;
   const sportDetails = new SportDetails({
     turfId,
     sportName,
+    sportPrice
   });
   sportDetails
     .save()
@@ -156,6 +152,7 @@ router.post("/userBooking", (req, res) => {
     paymentMode,
     clubImage,
     sportName,
+    razorpaySignature
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -171,6 +168,7 @@ router.post("/userBooking", (req, res) => {
     paymentMode,
     clubImage,
     sportName,
+    razorpaySignature
   });
   userBooking
     .save()
@@ -303,44 +301,6 @@ router.get("/getuserinfo", (req, res) => {
   });
 });
 
-// router.post('/userentry2',(req,res)=>{
-//     const {fname,lname,email,mobile,otp,time}=req.body;
 
-//     NewUserDetails.findOne({mobile:mobile})
-//         .then((saveduser)=>{
-//             if(saveduser){
-//                 NewUserDetails.updateOne({mobile:mobile},
-//                     {
-//                     fname:fname,
-//                     lname:lname,
-//                     email:email,
-//                     otp:otp,
-//                     time:time
-//                 })
-//                 .then(() => {
-//                     res.json({ message: "Restaurant updated successfully" })
-//                 }).catch(err => {
-//                     console.log(err);
-//                 })
-//             }
-//             const details=new NewUserDetails({
-//                 fname,
-//                 lname,
-//                 email,
-//                 mobile,
-//                 otp,
-//                 time:Date.now()
-//             });
-
-//             details.save()
-//             .then(user=>{
-//                 res.status(200).json({message:"saved successfully"})
-//             })
-//             .catch(err=>{
-//                 console.log(err)
-//                 res.status(400).json({error:err})
-//             })
-//         })
-// })
 
 module.exports = router;

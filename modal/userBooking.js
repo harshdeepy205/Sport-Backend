@@ -50,6 +50,9 @@ const userBooking = mongoose.Schema({
     type: String,
     required: true,
   },
+  razorpaySignature:{
+    type:String,
+  }
 
 });
 
