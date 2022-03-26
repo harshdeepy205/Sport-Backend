@@ -75,7 +75,8 @@ router.get("/userinfo/:mobile", (req, res) => {
 });
 
 router.post("/clubdetails", (req, res) => {
-  const { name, image, address, banners, mobileNo } = req.body;
+  const { name, image, address, banners, mobileNo, start_time, end_time } =
+    req.body;
 
   if (!name || !image || !address || !mobileNo || !banners) {
     return res.status(422).json({ error: "Please Fill the details" });
@@ -91,6 +92,8 @@ router.post("/clubdetails", (req, res) => {
       address,
       mobileNo,
       banners,
+      start_time,
+      end_time,
     });
 
     clubetails
@@ -105,11 +108,11 @@ router.post("/clubdetails", (req, res) => {
 });
 
 router.post("/sportDetails", (req, res) => {
-  const { turfId, sportName,sportPrice } = req.body;
+  const { turfId, sportName, sportPrice } = req.body;
   const sportDetails = new SportDetails({
     turfId,
     sportName,
-    sportPrice
+    sportPrice,
   });
   sportDetails
     .save()
@@ -152,7 +155,7 @@ router.post("/userBooking", (req, res) => {
     paymentMode,
     clubImage,
     sportName,
-    razorpaySignature
+    razorpaySignature,
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -168,7 +171,7 @@ router.post("/userBooking", (req, res) => {
     paymentMode,
     clubImage,
     sportName,
-    razorpaySignature
+    razorpaySignature,
   });
   userBooking
     .save()
@@ -300,7 +303,5 @@ router.get("/getuserinfo", (req, res) => {
     res.status(200).json(data);
   });
 });
-
-
 
 module.exports = router;

@@ -13,6 +13,14 @@ const clubDetails = mongoose.Schema({
     type: String,
     required: true,
   },
+  start_time: {
+    type: String,
+    required: true,
+  },
+  end_time: {
+    type: String,
+    required: true,
+  },
   mobileNo: {
     type: String,
     required: true,
