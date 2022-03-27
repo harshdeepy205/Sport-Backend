@@ -50,10 +50,12 @@ const userBooking = mongoose.Schema({
     type: String,
     required: true,
   },
-  razorpaySignature:{
-    type:String,
-  }
-
+  razorpaySignature: {
+    type: String,
+  },
+  slotId: {
+    type: String,
+  },
 });
 
 mongoose.model("UserBooking", userBooking);
