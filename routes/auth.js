@@ -156,7 +156,7 @@ router.post("/userBooking", (req, res) => {
     clubImage,
     sportName,
     razorpaySignature,
-    slotId
+    slotId,
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -173,7 +173,7 @@ router.post("/userBooking", (req, res) => {
     clubImage,
     sportName,
     razorpaySignature,
-    slotId
+    slotId,
   });
   userBooking
     .save()
@@ -239,16 +239,18 @@ router.post("/slots", (req, res) => {
 router.get("/getavailableslots/:id/:date", (req, res) => {
   var id = req.params.id;
   var date = req.params.date;
-  Slot.find(
+  UserBooking.find(
     {
-      user_id_admin: id,
-      slot_date: date,
+      clubId: id,
+      date: date,
     },
+    { _id: false, slotId: true },
     (err, data) => {
       if (err) {
         console.log(err, "err");
         return res.status(422).json({ error: error });
       }
+      console.log(data, "data");
       res.status(200).json(data);
     }
   );
