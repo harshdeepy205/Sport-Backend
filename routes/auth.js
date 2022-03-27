@@ -156,6 +156,7 @@ router.post("/userBooking", (req, res) => {
     clubImage,
     sportName,
     razorpaySignature,
+    slotId
   } = req.body;
   const userBooking = new UserBooking({
     fname,
@@ -172,6 +173,7 @@ router.post("/userBooking", (req, res) => {
     clubImage,
     sportName,
     razorpaySignature,
+    slotId
   });
   userBooking
     .save()
